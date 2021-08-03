@@ -1,0 +1,19 @@
+## Files
+*.pyc
+.DS_Store
+.env
+db.sqlite3
+
+## Dirs
+env/
+__pycache__/
+staticfiles/
+media/
+
+# Visual Studio Code #
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history
