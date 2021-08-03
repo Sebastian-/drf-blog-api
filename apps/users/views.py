@@ -1,6 +1,9 @@
+from rest_framework import generics, permissions
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
+
+from apps.users.serializers import UserSerializer
 
 
 class Login(ObtainAuthToken):
@@ -15,3 +18,8 @@ class Login(ObtainAuthToken):
             'token': token.key,
             'user_id': user.pk,
         })
+
+
+class Register(generics.CreateAPIView):
+    serializer_class = UserSerializer
+    permission_classes = [permissions.AllowAny]
