@@ -1,4 +1,3 @@
-from django import dispatch
 from django.apps import AppConfig
 from django.db.models import signals
 
