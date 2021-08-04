@@ -29,4 +29,4 @@ class ViewCount(models.Model):
                                 primary_key=True)
 
     def __str__(self):
-        return f'${str(self.count)} views for ${self.post.title}'
+        return f'{str(self.count)} views for {self.post.title}'
