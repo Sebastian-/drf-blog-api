@@ -1,18 +1,22 @@
-from django.http import Http404
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import generics, permissions
 
 from .models import Post
-from .serializers import PostSerializer
+from .serializers import PostListSerializer, PostDetailSerializer
 
 
-class PostList(APIView):
+class PostList(generics.ListCreateAPIView):
     """
-    List all posts
+    List all posts, or create a new post.
     """
+    queryset = Post.objects.all()
+    serializer_class = PostListSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
-    def get(self, request, format=None):
-        posts = Post.objects.all()
-        serializer = PostSerializer(posts, many=True)
-        return Response(serializer.data)
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
+
+class PostDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostDetailSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
