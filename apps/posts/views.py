@@ -1,3 +1,4 @@
+from rest_framework.response import Response
 from apps.posts.permissions import IsOwnerOrReadOnly
 from rest_framework import generics, permissions
 
@@ -22,3 +23,9 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PostDetailSerializer
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.increment_view_count()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)

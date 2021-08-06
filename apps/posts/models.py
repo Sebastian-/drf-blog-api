@@ -26,6 +26,10 @@ class Post(models.Model):
 
         super(Post, self).save(*args, **kwargs)
 
+    def increment_view_count(self):
+        self.viewcount.count += 1
+        self.viewcount.save()
+
     def __str__(self):
         return self.title
 
