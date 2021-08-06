@@ -1,9 +1,17 @@
+from django.contrib.auth import get_user_model
 from rest_framework import generics, permissions
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 
+from apps.users.permissions import IsUsersProfile
 from apps.users.serializers import UserSerializer
+
+
+class UserInfo(generics.RetrieveAPIView):
+    queryset = get_user_model().objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated, IsUsersProfile]
 
 
 class Login(ObtainAuthToken):
